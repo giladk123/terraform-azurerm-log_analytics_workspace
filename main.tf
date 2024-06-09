@@ -1,3 +1,13 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = ">=3.104.0"
+    }
+  }
+}
+
+
 resource "azurerm_log_analytics_workspace" "new_law" {
   for_each = var.workspaces
 

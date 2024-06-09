@@ -1,12 +1,51 @@
+## Usage
+
+```terraform
+
+module "log-analytics-workspace" {
+  source     = "./module/log-analytics-workspace"
+  workspaces = local.log_analytics_workspace
+  
+  depends_on = [ module.resource_group ]
+
+  providers = {
+    azurerm = azurerm.subscription1
+  }
+}
+```
+
+JSON
+
+```json
+
+{
+    "workspace1": {
+      "law_name": "<log analytics workspace name>",
+      "rg_location": "<location>",
+      "rg_name": "<resource group>",
+      "sku": "<sku name>>",
+      "retention_in_days": <number>,
+      "internet_ingestion_enabled": <true/false>,
+      "internet_query_enabled": <true/false>,
+      "tags": {
+        "environment": "dev"
+      }
+    }
+  }
+```
+
+
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >=3.104.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | n/a |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >=3.104.0 |
 
 ## Modules
 
@@ -22,19 +61,10 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_internet_ingestion_enabled"></a> [internet\_ingestion\_enabled](#input\_internet\_ingestion\_enabled) | enable internet ingestion | `bool` | n/a | yes |
-| <a name="input_internet_query_enabled"></a> [internet\_query\_enabled](#input\_internet\_query\_enabled) | enable internet query | `bool` | n/a | yes |
-| <a name="input_law_name"></a> [law\_name](#input\_law\_name) | The name of the Log Analytics Workspace. | `string` | n/a | yes |
-| <a name="input_retention_in_days"></a> [retention\_in\_days](#input\_retention\_in\_days) | retention in days | `number` | n/a | yes |
-| <a name="input_rg_location"></a> [rg\_location](#input\_rg\_location) | The location where the resource group is created. | `string` | n/a | yes |
-| <a name="input_rg_name"></a> [rg\_name](#input\_rg\_name) | The name of the resource group in which the Log Analytics Workspace is created. | `string` | n/a | yes |
-| <a name="input_sku"></a> [sku](#input\_sku) | log analytics workspace sku | `string` | n/a | yes |
-| <a name="input_tags"></a> [tags](#input\_tags) | A mapping of tags to assign to the resource. | `map(any)` | n/a | yes |
+| <a name="input_workspaces"></a> [workspaces](#input\_workspaces) | A map of log analytics workspaces | `map(any)` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_law_id"></a> [law\_id](#output\_law\_id) | value of the Log Analytics Workspace id |
-| <a name="output_law_location"></a> [law\_location](#output\_law\_location) | value of the Log Analytics Workspace location |
-| <a name="output_law_name"></a> [law\_name](#output\_law\_name) | value of the Log Analytics Workspace name |
+| <a name="output_all_law_attributes"></a> [all\_law\_attributes](#output\_all\_law\_attributes) | All attributes of the Log Analytics Workspaces |
